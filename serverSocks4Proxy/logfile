@@ -1,0 +1,29 @@
+2022/07/04 22:22:58 ServerSocks4.go:154: socks server bind 192.168.0.119:8081
+2022/07/04 22:23:03 ServerSocks4.go:162: connection from 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:120: read 9 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:89: ver=4 cmd=1 external addr 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:101: has connected to external 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:120: read 517 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:127: write 517 bytes to external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:64: read 5720 bytes from external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:64: read 967 bytes from external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:120: read 80 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:127: write 80 bytes to external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:120: read 46 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:127: write 46 bytes to external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:120: read 49 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:127: write 49 bytes to external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:120: read 35 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:127: write 35 bytes to external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:120: read 58 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:127: write 58 bytes to external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:64: read 642 bytes from external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:64: read 31 bytes from external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:120: read 31 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:127: write 31 bytes to external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:64: read 327 bytes from external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:64: read 251 bytes from external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:120: read 24 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:127: write 24 bytes to external server 108.177.14.138:443
+2022/07/04 22:23:03 ServerSocks4.go:120: read 0 bytes from internal 192.168.0.119:61690
+2022/07/04 22:23:03 ServerSocks4.go:64: read 31 bytes from external server 108.177.14.138:443

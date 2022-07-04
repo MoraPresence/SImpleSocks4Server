@@ -1,0 +1,8 @@
+[
+  {
+    "ListenIf": "192.168.0.119",
+    "ListenPort": "8081",
+    "ExternIf": "192.168.0.119:8082",
+    "LogFile": "./logfile"
+  }
+]
