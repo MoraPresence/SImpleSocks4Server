@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"log"
 	"net"
-	"strconv"
 )
 
 const (
@@ -29,7 +28,7 @@ func successConn(t *Tunnel) {
 	t.lconn.Write(buf)
 }
 
-func lookupAddr(host string) (net.IP, error) {
+/*func lookupAddr(host string) (net.IP, error) {
 	ip, err := net.ResolveIPAddr("ip4", host)
 	if err != nil {
 		return net.IP{}, err
@@ -52,7 +51,7 @@ func parseAddr(addr string) (host string, iport int, err error) {
 	}
 
 	return
-}
+}*/
 
 func servExternalTunnel(t *Tunnel) {
 	defer t.rconn.Close()
@@ -91,10 +90,8 @@ func connectExternal(buf []byte, bufSize int, t *Tunnel, externlf string) bool {
 
 	log.Printf("ver=%v cmd=%v external addr %v:%v\n", ver, cmd, ip, port)
 
-	hostIn, portIn, err := parseAddr(externlf)
-
 	external := &net.TCPAddr{IP: ip, Port: port}
-	internal := &net.TCPAddr{IP: net.ParseIP(hostIn), Port: portIn}
+	internal := &net.TCPAddr{IP: net.ParseIP(externlf)}
 
 	c, err := net.DialTCP("tcp", internal, external)
 	if err != nil {
