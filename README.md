@@ -1,7 +1,7 @@
 ## Usage ###
 
 #### Запуск 
-
+    $ cd /serverSocks4Proxy
     $ go build
     $ ./serverSocks4Proxy
     
