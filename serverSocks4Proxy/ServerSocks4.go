@@ -19,42 +19,30 @@ type Tunnel struct {
 
 func refuseConn(t *Tunnel) {
 	buf := []byte{0, 0x5b, 0, 0, 0, 0, 0, 0}
-	t.lconn.Write(buf)
+	_, err := t.lconn.Write(buf)
+	if err != nil {
+		log.Printf("cannot write in refuseConn: %s", err)
+		return
+	}
 	t.closed = true
 }
 
 func successConn(t *Tunnel) {
 	buf := []byte{0, 0x5a, 0, 0, 0, 0, 0, 0}
-	t.lconn.Write(buf)
+	_, err := t.lconn.Write(buf)
+	if err != nil {
+		log.Printf("cannot write in successConn: %s", err)
+		return
+	}
 }
-
-/*func lookupAddr(host string) (net.IP, error) {
-	ip, err := net.ResolveIPAddr("ip4", host)
-	if err != nil {
-		return net.IP{}, err
-	}
-
-	return ip.IP.To4(), nil
-}
-
-func parseAddr(addr string) (host string, iport int, err error) {
-	var port string
-
-	host, port, err = net.SplitHostPort(addr)
-	if err != nil {
-		return "", 0, err
-	}
-
-	iport, err = strconv.Atoi(port)
-	if err != nil {
-		return "", 0, err
-	}
-
-	return
-}*/
 
 func servExternalTunnel(t *Tunnel) {
-	defer t.rconn.Close()
+	defer func(rconn net.Conn) {
+		err := rconn.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(t.rconn)
 
 	buf := make([]byte, defaultBufSize)
 
@@ -71,7 +59,11 @@ func servExternalTunnel(t *Tunnel) {
 			return
 		}
 
-		t.lconn.Write(buf[:n])
+		_, err = t.lconn.Write(buf[:n])
+		if err != nil {
+			//log.Printf("cannot write in servExternalTunnel: %s", err)
+			return
+		}
 	}
 }
 
@@ -104,7 +96,10 @@ func connectExternal(buf []byte, bufSize int, t *Tunnel, externlf string) bool {
 
 	t.rconn = c
 	if end < bufSize {
-		t.rconn.Write(buf[end:])
+		_, err := t.rconn.Write(buf[end:])
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	go servExternalTunnel(t)
@@ -114,7 +109,12 @@ func connectExternal(buf []byte, bufSize int, t *Tunnel, externlf string) bool {
 func servInternalTunnel(lconn net.Conn, externlf string) {
 	t := new(Tunnel)
 	t.lconn = lconn
-	defer t.lconn.Close()
+	defer func(lconn net.Conn) {
+		err := lconn.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(t.lconn)
 
 	buf := make([]byte, defaultBufSize)
 	bufSize := 0
@@ -129,7 +129,10 @@ func servInternalTunnel(lconn net.Conn, externlf string) {
 
 		if t.rconn != nil {
 			log.Printf("write %v bytes to external server %v", n, t.rconn.RemoteAddr())
-			t.rconn.Write(buf[:n+bufSize])
+			_, err := t.rconn.Write(buf[:n+bufSize])
+			if err != nil {
+				log.Fatal(err)
+			}
 			bufSize = 0
 			continue
 		}
