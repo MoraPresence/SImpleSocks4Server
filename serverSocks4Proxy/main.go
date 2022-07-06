@@ -2,10 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net"
 	"os"
+	"os/signal"
+	"syscall"
 )
 
 type Config struct {
@@ -36,6 +39,20 @@ func GetInternalIP(netInt string) string {
 	}
 }
 
+func SetupCloseHandler(file *os.File) {
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		fmt.Println("\r- Ctrl+C pressed in Terminal")
+		err := file.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+		os.Exit(0)
+	}()
+}
+
 func main() {
 	jfile, err := ioutil.ReadFile("./config.json")
 	if err != nil {
@@ -53,10 +70,11 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
 	}
-	defer f.Close()
+
+	SetupCloseHandler(f)
 
 	ipInternal := GetInternalIP(data[0].ListenIf)
-	ipExternal := GetInternalIP(data[0].ListenIf)
+	ipExternal := GetInternalIP(data[0].ExternIf)
 
 	log.SetOutput(f)
 	log.SetFlags(log.Lshortfile | log.Ldate | log.Ltime)
